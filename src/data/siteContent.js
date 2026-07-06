@@ -3,7 +3,7 @@ import docsImage from "../assets/img/docs.jpg";
 import scholarshipImage from "../assets/img/scholar1.jpg";
 import trustImage from "../assets/img/trust.jpg";
 import successImage from "../assets/img/success.jpg";
-import logoImage from "../assets/img/logo.png";
+import logoImage from "../assets/img/studylinkhub-logo.png";
 import emailIcon from "../assets/img/icons/envlop.svg";
 import phoneIcon from "../assets/img/icons/call.svg";
 import studentIcon from "../assets/img/icons/user.svg";
@@ -352,17 +352,17 @@ export const siteContent = {
       submit: "Send request",
       success: "Your request was sent. We will contact you soon.",
       missingConfig:
-        "Formspree is not configured yet. Add VITE_FORMSPREE_ENDPOINT to send real emails.",
+        "Formspree is not configured yet. Add the contact and newsletter Formspree endpoints to send real emails.",
     },
     contactInfo: [
       {
         label: "Email",
-        value: "contact@studylinkhub.com",
-        href: "mailto:contact@studylinkhub.com",
+        value: "contact@study-link-hub.com",
+        href: "mailto:contact@study-link-hub.com",
       },
       {
         label: "Phone",
-        value: "+216 70 877 053 / +216 26 253 080",
+        value: "+216 70 877 053\n+216 26 253 080",
         href: "tel:+21670877053",
       },
       {
@@ -694,17 +694,17 @@ export const siteContent = {
       submit: "Envoyer la demande",
       success: "Votre demande a été envoyée. Nous vous contacterons bientôt.",
       missingConfig:
-        "Formspree n'est pas encore configuré. Ajoutez VITE_FORMSPREE_ENDPOINT pour envoyer de vrais emails.",
+        "Formspree n'est pas encore configuré. Ajoutez les endpoints Formspree contact et newsletter pour envoyer de vrais emails.",
     },
     contactInfo: [
       {
         label: "Email",
-        value: "contact@studylinkhub.com",
-        href: "mailto:contact@studylinkhub.com",
+        value: "contact@study-link-hub.com",
+        href: "mailto:contact@study-link-hub.com",
       },
       {
         label: "Téléphone",
-        value: "+216 70 877 053 / +216 26 253 080",
+        value: "+216 70 877 053\n+216 26 253 080",
         href: "tel:+21670877053",
       },
       {

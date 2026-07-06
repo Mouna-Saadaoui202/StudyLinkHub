@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { articles, languages, siteContent, articleImages } from "../data/siteContent";
 import "../assets/css/landing.css";
 
-const formspreeEndpoint =
-  import.meta.env.VITE_FORMSPREE_ENDPOINT || "https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID";
+const formspreeEndpoints = {
+  contact: import.meta.env.VITE_FORMSPREE_CONTACT_ENDPOINT || "https://formspree.io/f/xwvdzvar",
+  newsletter: import.meta.env.VITE_FORMSPREE_NEWSLETTER_ENDPOINT || "https://formspree.io/f/mbdvbdqq",
+};
 
-const isFormspreeConfigured = !formspreeEndpoint.includes("REPLACE_WITH_YOUR_FORM_ID");
+const isFormspreeConfigured = (type) => !formspreeEndpoints[type].includes("REPLACE_WITH_YOUR_FORM_ID");
 
 function updateMeta(content, lang) {
   document.documentElement.lang = languages[lang].htmlLang;
@@ -34,10 +36,10 @@ const socialLinks = [
   { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/" },
   { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/" },
   { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/" },
+  { label: "TikTok", icon: "tiktok", href: "https://www.tiktok.com/" },
 ];
 
 const serviceIconKeys = ["student", "program", "calendar"];
-const proofIconKeys = ["world", "book", "calendar", "search"];
 const processIconKeys = ["student", "search", "book", "calendar"];
 
 function getContactIcon(label) {
@@ -46,6 +48,14 @@ function getContactIcon(label) {
   if (normalizedLabel.includes("email")) return articleImages.icons.email;
   if (normalizedLabel.includes("phone") || normalizedLabel.includes("télé")) return articleImages.icons.phone;
   return articleImages.icons.calendar;
+}
+
+function getContactIconType(label) {
+  const normalizedLabel = label.toLowerCase();
+
+  if (normalizedLabel.includes("email")) return "email";
+  if (normalizedLabel.includes("phone") || normalizedLabel.includes("télé")) return "phone";
+  return "address";
 }
 
 function SocialIcon({ name }) {
@@ -61,6 +71,14 @@ function SocialIcon({ name }) {
     return (
       <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
         <path d="M7.8 3.75h8.4A4.05 4.05 0 0 1 20.25 7.8v8.4a4.05 4.05 0 0 1-4.05 4.05H7.8a4.05 4.05 0 0 1-4.05-4.05V7.8A4.05 4.05 0 0 1 7.8 3.75Zm0 1.8A2.25 2.25 0 0 0 5.55 7.8v8.4a2.25 2.25 0 0 0 2.25 2.25h8.4a2.25 2.25 0 0 0 2.25-2.25V7.8a2.25 2.25 0 0 0-2.25-2.25H7.8Zm4.2 3.05a3.4 3.4 0 1 1 0 6.8 3.4 3.4 0 0 1 0-6.8Zm0 1.8a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2Zm4.01-2.85a.84.84 0 1 1 0 1.68.84.84 0 0 1 0-1.68Z" />
+      </svg>
+    );
+  }
+
+  if (name === "tiktok") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+        <path d="M15.52 3.75c.34 2.08 1.53 3.35 3.58 3.49v3.02a6.58 6.58 0 0 1-3.53-1.06v5.25c0 3.4-2.06 5.8-5.22 5.8a5.02 5.02 0 0 1-5.2-5.09c0-3.07 2.36-5.22 5.63-5.22.28 0 .54.02.8.07v3.12a3.23 3.23 0 0 0-.86-.12 2.04 2.04 0 0 0-2.22 2.1 2.02 2.02 0 0 0 2.04 2.12c1.22 0 1.96-.72 1.96-2.32V3.75h3.02Z" />
       </svg>
     );
   }
@@ -228,15 +246,27 @@ export function LandingPage({ lang = "en" }) {
   const content = siteContent[lang];
   const currentArticles = articles[lang];
   const otherLang = lang === "en" ? "fr" : "en";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [contactMessage, setContactMessage] = useState("");
   const [newsletterMessage, setNewsletterMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAllDestinations, setShowAllDestinations] = useState(false);
+  const [showAllIndustries, setShowAllIndustries] = useState(false);
+  const [showAllProcessSteps, setShowAllProcessSteps] = useState(false);
+  const [showAllTestimonials, setShowAllTestimonials] = useState(false);
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
   const [checkerStep, setCheckerStep] = useState(0);
   const [checkerAnswers, setCheckerAnswers] = useState({});
 
   const featuredArticles = useMemo(() => currentArticles.slice(0, 3), [currentArticles]);
-  const visibleDestinations = showAllDestinations ? content.destinations : content.destinations.slice(0, 4);
+  const industryPreviewCount = isCompactViewport ? 4 : content.industries.length;
+  const destinationPreviewCount = isCompactViewport ? 3 : 4;
+  const processPreviewCount = isCompactViewport ? 2 : content.process.length;
+  const testimonialPreviewCount = isCompactViewport ? 1 : content.testimonials.length;
+  const visibleIndustries = showAllIndustries ? content.industries : content.industries.slice(0, industryPreviewCount);
+  const visibleDestinations = showAllDestinations ? content.destinations : content.destinations.slice(0, destinationPreviewCount);
+  const visibleProcessSteps = showAllProcessSteps ? content.process : content.process.slice(0, processPreviewCount);
+  const visibleTestimonials = showAllTestimonials ? content.testimonials : content.testimonials.slice(0, testimonialPreviewCount);
   const checkerFields = useMemo(
     () => [
       {
@@ -281,11 +311,24 @@ export function LandingPage({ lang = "en" }) {
     updateMeta(content, lang);
   }, [content, lang]);
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [lang]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 760px)");
+    const updateViewport = () => setIsCompactViewport(mediaQuery.matches);
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
+
   async function sendToFormspree(event, type) {
     event.preventDefault();
+    const form = event.currentTarget;
     const setMessage = type === "newsletter" ? setNewsletterMessage : setContactMessage;
 
-    if (!isFormspreeConfigured) {
+    if (!isFormspreeConfigured(type)) {
       setMessage(content.contact.missingConfig);
       return;
     }
@@ -293,28 +336,47 @@ export function LandingPage({ lang = "en" }) {
     setIsSubmitting(true);
     setMessage("");
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
     formData.append("form_type", type);
     formData.append("language", lang);
+    if (type === "contact") {
+      Object.entries(checkerAnswers).forEach(([key, value]) => {
+        if (value) {
+          formData.set(key, value);
+        }
+      });
+    }
 
     try {
-      const response = await fetch(formspreeEndpoint, {
+      const response = await fetch(formspreeEndpoints[type], {
         method: "POST",
         headers: { Accept: "application/json" },
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error("Formspree request failed");
+        let errorMessage = "Formspree request failed";
+        try {
+          const payload = await response.json();
+          errorMessage = payload?.errors?.[0]?.message || payload?.error || errorMessage;
+        } catch {
+          errorMessage = `${errorMessage} (${response.status})`;
+        }
+        throw new Error(errorMessage);
       }
 
-      event.currentTarget.reset();
+      form.reset();
+      if (type === "contact") {
+        setCheckerAnswers({});
+        setCheckerStep(0);
+      }
       setMessage(type === "newsletter" ? content.newsletter.success : content.contact.success);
     } catch (error) {
+      console.error("Formspree submission failed:", error);
       setMessage(
         lang === "fr"
-          ? "L'envoi a échoué. Vérifiez la configuration Formspree."
-          : "Sending failed. Check the Formspree configuration."
+          ? `L'envoi a échoué. ${error.message || "Vérifiez la configuration Formspree."}`
+          : `Sending failed. ${error.message || "Check the Formspree configuration."}`
       );
     } finally {
       setIsSubmitting(false);
@@ -328,12 +390,24 @@ export function LandingPage({ lang = "en" }) {
           <img src={articleImages.logo} alt="" />
         </Link>
 
-        <nav className="slh-nav" aria-label="Main navigation">
-          <a href="#about">{content.nav.about}</a>
-          <a href="#scholarships">{content.nav.scholarships}</a>
-          <a href="#destinations">{content.nav.destinations}</a>
-          <a href="#process">{content.nav.process}</a>
-          <Link to={joinPath(lang, "/blogs")}>{content.nav.articles}</Link>
+        <button
+          aria-expanded={isMenuOpen}
+          aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          className={`slh-menu-toggle ${isMenuOpen ? "is-open" : ""}`}
+          onClick={() => setIsMenuOpen((current) => !current)}
+          type="button"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <nav className={`slh-nav ${isMenuOpen ? "is-open" : ""}`} aria-label="Main navigation">
+          <a href="#about" onClick={() => setIsMenuOpen(false)}>{content.nav.about}</a>
+          <a href="#scholarships" onClick={() => setIsMenuOpen(false)}>{content.nav.scholarships}</a>
+          <a href="#destinations" onClick={() => setIsMenuOpen(false)}>{content.nav.destinations}</a>
+          <a href="#process" onClick={() => setIsMenuOpen(false)}>{content.nav.process}</a>
+          <Link to={joinPath(lang, "/blogs")} onClick={() => setIsMenuOpen(false)}>{content.nav.articles}</Link>
         </nav>
 
         <div className="slh-header-actions">
@@ -520,7 +594,7 @@ export function LandingPage({ lang = "en" }) {
         <section className="slh-proof-strip" aria-label="Study Link Hub strengths">
           {content.proof.map((item, index) => (
             <span key={item}>
-              <img src={articleImages.icons[proofIconKeys[index % proofIconKeys.length]]} alt="" />
+              <strong>0{index + 1}</strong>
               {item}
             </span>
           ))}
@@ -530,7 +604,7 @@ export function LandingPage({ lang = "en" }) {
           <div className="slh-persona-grid">
             {content.personas.map((persona, index) => (
               <article className="slh-persona-card" key={persona.title}>
-                <img src={articleImages.icons[index === 0 ? "student" : "heart"]} alt="" />
+                <img src={articleImages.icons[index === 0 ? "student" : "world"]} alt="" />
                 <div>
                   <h2>{persona.title}</h2>
                   <p>{persona.text}</p>
@@ -564,8 +638,8 @@ export function LandingPage({ lang = "en" }) {
               {content.sections.industriesCta}
             </a>
           </div>
-          <div className="slh-industries-grid">
-            {content.industries.map((industry) => (
+          <div className={`slh-industries-grid ${showAllIndustries ? "is-expanded" : ""}`}>
+            {visibleIndustries.map((industry) => (
               <article className="slh-industry-card" key={industry.title}>
                 <span aria-hidden="true">
                   <IndustryIcon name={industry.icon} />
@@ -577,6 +651,19 @@ export function LandingPage({ lang = "en" }) {
               </article>
             ))}
           </div>
+          <button
+            className="slh-show-more slh-show-more-industries"
+            type="button"
+            onClick={() => setShowAllIndustries((current) => !current)}
+          >
+            {showAllIndustries
+              ? lang === "fr"
+                ? "Voir moins"
+                : "Show less"
+              : lang === "fr"
+                ? "Voir plus de domaines"
+                : "Show more fields"}
+          </button>
         </section>
 
         <section className="slh-section slh-band" id="destinations">
@@ -622,10 +709,10 @@ export function LandingPage({ lang = "en" }) {
             <h2>{content.sections.testimonialsTitle}</h2>
           </div>
           <div className="slh-card-grid slh-three">
-            {content.testimonials.map((testimonial) => (
+            {visibleTestimonials.map((testimonial) => (
               <figure className="slh-testimonial" key={testimonial.name}>
                 <span aria-hidden="true">
-                  <img src={articleImages.icons.heart} alt="" />
+                  <img src={articleImages.icons.student} alt="" />
                 </span>
                 <blockquote>{testimonial.quote}</blockquote>
                 <figcaption>
@@ -635,6 +722,19 @@ export function LandingPage({ lang = "en" }) {
               </figure>
             ))}
           </div>
+          <button
+            className="slh-show-more slh-show-more-testimonials"
+            type="button"
+            onClick={() => setShowAllTestimonials((current) => !current)}
+          >
+            {showAllTestimonials
+              ? lang === "fr"
+                ? "Voir moins"
+                : "Show less"
+              : lang === "fr"
+                ? "Voir plus d'avis"
+                : "Show more testimonials"}
+          </button>
         </section>
 
         <section className="slh-section slh-faq-section" id="faq">
@@ -659,7 +759,7 @@ export function LandingPage({ lang = "en" }) {
             <p>{content.sections.promiseText}</p>
           </div>
           <ol className="slh-process">
-            {content.process.map((step, index) => (
+            {visibleProcessSteps.map((step, index) => (
               <li key={step.title}>
                 <img src={articleImages.icons[processIconKeys[index % processIconKeys.length]]} alt="" />
                 <span>0{index + 1}</span>
@@ -670,6 +770,19 @@ export function LandingPage({ lang = "en" }) {
               </li>
             ))}
           </ol>
+          <button
+            className="slh-show-more slh-show-more-process"
+            type="button"
+            onClick={() => setShowAllProcessSteps((current) => !current)}
+          >
+            {showAllProcessSteps
+              ? lang === "fr"
+                ? "Voir moins"
+                : "Show less"
+              : lang === "fr"
+                ? "Voir toutes les étapes"
+                : "Show all steps"}
+          </button>
         </section>
 
         <section className="slh-section" id="blogs">
@@ -703,6 +816,7 @@ export function LandingPage({ lang = "en" }) {
             <div className="slh-contact-info">
               {content.contactInfo.map((item) => (
                 <a
+                  className={`slh-contact-card slh-contact-card-${getContactIconType(item.label)}`}
                   href={item.href}
                   key={item.label}
                   target={item.href.startsWith("http") ? "_blank" : undefined}
@@ -753,9 +867,6 @@ export function LandingPage({ lang = "en" }) {
         </div>
         <nav aria-label={lang === "fr" ? "Navigation du pied de page" : "Footer navigation"}>
           <a href="#about">{content.nav.about}</a>
-          <a href="#scholarships">{content.nav.scholarships}</a>
-          <a href="#process">{content.nav.process}</a>
-          <a href="#destinations">{content.nav.destinations}</a>
           <a href="#contact">{content.nav.contact}</a>
         </nav>
         <div className="slh-footer-socials">
