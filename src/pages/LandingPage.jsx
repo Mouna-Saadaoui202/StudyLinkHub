@@ -47,7 +47,7 @@ function getContactIcon(label) {
 
   if (normalizedLabel.includes("email")) return articleImages.icons.email;
   if (normalizedLabel.includes("phone") || normalizedLabel.includes("télé")) return articleImages.icons.phone;
-  return articleImages.icons.calendar;
+  return articleImages.icons.world;
 }
 
 function getContactIconType(label) {
@@ -152,6 +152,29 @@ function IndustryIcon({ name }) {
     <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
       {paths[name] || paths.science}
     </svg>
+  );
+}
+
+function PersonaIcon({ type }) {
+  if (type === "student") {
+    return (
+      <span className="slh-persona-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M3 8.5 12 4l9 4.5-9 4.5L3 8.5Z" />
+          <path d="M7 11v4.2c0 1.6 2.2 2.8 5 2.8s5-1.2 5-2.8V11" />
+          <path d="M20 9v5" />
+        </svg>
+      </span>
+    );
+  }
+
+  return (
+    <span className="slh-persona-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" />
+        <path d="M4.5 20c.8-3.8 3.5-6 7.5-6s6.7 2.2 7.5 6" />
+      </svg>
+    </span>
   );
 }
 
@@ -604,7 +627,7 @@ export function LandingPage({ lang = "en" }) {
           <div className="slh-persona-grid">
             {content.personas.map((persona, index) => (
               <article className="slh-persona-card" key={persona.title}>
-                <img src={articleImages.icons[index === 0 ? "student" : "world"]} alt="" />
+                <PersonaIcon type={index === 0 ? "student" : "parent"} />
                 <div>
                   <h2>{persona.title}</h2>
                   <p>{persona.text}</p>
