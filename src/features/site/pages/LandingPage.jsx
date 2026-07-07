@@ -4,8 +4,8 @@ import { articles, languages, siteContent, articleImages } from "../data/siteCon
 import "../styles/landing.css";
 
 const formspreeEndpoints = {
-  contact: import.meta.env.VITE_FORMSPREE_CONTACT_ENDPOINT || "https://formspree.io/f/xwvdzvar",
-  newsletter: import.meta.env.VITE_FORMSPREE_NEWSLETTER_ENDPOINT || "https://formspree.io/f/mbdvbdqq",
+  contact: import.meta.env.VITE_FORMSPREE_CONTACT_ENDPOINT || "https://formspree.io/f/xlgyvybd",
+  newsletter: import.meta.env.VITE_FORMSPREE_NEWSLETTER_ENDPOINT || "https://formspree.io/f/xqevjvqk",
 };
 
 const isFormspreeConfigured = (type) => !formspreeEndpoints[type].includes("REPLACE_WITH_YOUR_FORM_ID");
@@ -247,13 +247,31 @@ function FlagIcon({ name }) {
     );
   }
 
-  if (name === "uae") {
+  if (name === "france") {
     return (
       <svg aria-hidden="true" viewBox="0 0 48 32" focusable="false">
-        <rect width="48" height="32" fill="#fff" />
-        <rect x="12" width="36" height="10.67" fill="#009739" />
-        <rect x="12" y="21.34" width="36" height="10.66" fill="#000" />
-        <rect width="12" height="32" fill="#ef3340" />
+        <rect width="16" height="32" fill="#002654" />
+        <rect x="16" width="16" height="32" fill="#fff" />
+        <rect x="32" width="16" height="32" fill="#ce1126" />
+      </svg>
+    );
+  }
+
+  if (name === "italy") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 48 32" focusable="false">
+        <rect width="16" height="32" fill="#009246" />
+        <rect x="16" width="16" height="32" fill="#fff" />
+        <rect x="32" width="16" height="32" fill="#ce2b37" />
+      </svg>
+    );
+  }
+
+  if (name === "spain") {
+    return (
+      <svg aria-hidden="true" viewBox="0 0 48 32" focusable="false">
+        <rect width="48" height="32" fill="#aa151b" />
+        <rect y="8" width="48" height="16" fill="#f1bf00" />
       </svg>
     );
   }
@@ -298,7 +316,9 @@ export function LandingPage({ lang = "en" }) {
         label: lang === "fr" ? "Destination cible" : "Target country",
         name: "target_country",
         options: [
-          ...content.destinations.slice(0, 6).map((destination) => destination.name),
+          ...content.destinations
+            .filter((destination) => destination.flagCode !== "world")
+            .map((destination) => destination.name),
           lang === "fr" ? "Autre" : "Other",
         ],
         freeTextLabel: lang === "fr" ? "Autre pays" : "Other country",
@@ -518,7 +538,12 @@ export function LandingPage({ lang = "en" }) {
               </figure>
             </div>
           </div>
-          <form className="slh-quick-form slh-checker" onSubmit={(event) => sendToFormspree(event, "contact")}>
+          <form
+            action={formspreeEndpoints.contact}
+            className="slh-quick-form slh-checker"
+            method="POST"
+            onSubmit={(event) => sendToFormspree(event, "contact")}
+          >
             <span className="slh-form-kicker">{lang === "fr" ? "Éligibilité rapide" : "Quick eligibility check"}</span>
             <div>
               <p className="slh-eyebrow">{content.nav.contact}</p>
@@ -875,7 +900,12 @@ export function LandingPage({ lang = "en" }) {
             <h2>{content.sections.newsletterTitle}</h2>
             <p>{content.newsletter.text}</p>
           </div>
-          <form className="slh-newsletter" onSubmit={(event) => sendToFormspree(event, "newsletter")}>
+          <form
+            action={formspreeEndpoints.newsletter}
+            className="slh-newsletter"
+            method="POST"
+            onSubmit={(event) => sendToFormspree(event, "newsletter")}
+          >
             <label className="sr-only" htmlFor={`newsletter-${lang}`}>{content.sections.newsletterTitle}</label>
             <div>
               <input id={`newsletter-${lang}`} name="email" type="email" placeholder={content.newsletter.email} required />

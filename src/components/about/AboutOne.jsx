@@ -64,7 +64,7 @@ export const AboutOne = () => {
                   About us
                 </p>
                 <h2 className="td_section_title td_fs_48 mb-0">
-                  Secure scholarships in China, UAE, Russia & Germany.
+                  Secure scholarships in China, France, Italy, Spain, Russia & Germany.
                 </h2>
                 <p className="td_section_subtitle td_fs_18 mb-0">
                   

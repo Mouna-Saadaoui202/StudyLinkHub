@@ -57,7 +57,7 @@ export const siteContent = {
       primaryCta: "Apply Now",
       secondaryCta: "Explore Destinations",
       stats: [
-        ["7+", "study destinations"],
+        ["9+", "study destinations"],
         ["1:1", "student guidance"],
         ["Accredited", "education support"],
       ],
@@ -127,7 +127,7 @@ export const siteContent = {
     ],
     successMetrics: [
       ["1:1", "profile evaluation"],
-      ["7+", "destination options"],
+      ["9+", "destination options"],
       ["4-step", "application roadmap"],
       ["Fast", "next-step reply"],
     ],
@@ -240,11 +240,25 @@ export const siteContent = {
         text: "A nearby study option with French-speaking pathways, familiar regional culture, and growing universities.",
       },
       {
-        name: "United Arab Emirates",
-        flag: "🇦🇪",
-        flagCode: "uae",
-        bestFor: "Modern campuses",
-        text: "Modern campuses, business networks, and international programs close to the region.",
+        name: "France",
+        flag: "🇫🇷",
+        flagCode: "france",
+        bestFor: "French pathways",
+        text: "Strong public universities, business schools, and French-language pathways with broad international recognition.",
+      },
+      {
+        name: "Italy",
+        flag: "🇮🇹",
+        flagCode: "italy",
+        bestFor: "Design + medicine",
+        text: "European programs in medicine, design, engineering, business, and arts with a rich student lifestyle.",
+      },
+      {
+        name: "Spain",
+        flag: "🇪🇸",
+        flagCode: "spain",
+        bestFor: "European mobility",
+        text: "Accessible European study options with international programs, Spanish-language opportunities, and vibrant cities.",
       },
       {
         name: "Other destinations",
@@ -310,7 +324,9 @@ export const siteContent = {
       "Greece",
       "Romania",
       "Morocco",
-      "United Arab Emirates",
+      "France",
+      "Italy",
+      "Spain",
     ],
     faq: [
       {
@@ -412,7 +428,7 @@ export const siteContent = {
       primaryCta: "Postuler maintenant",
       secondaryCta: "Explorer les destinations",
       stats: [
-        ["7+", "destinations"],
+        ["9+", "destinations"],
         ["1:1", "accompagnement"],
         ["Accrédité", "support étudiant"],
       ],
@@ -482,7 +498,7 @@ export const siteContent = {
     ],
     successMetrics: [
       ["1:1", "évaluation du profil"],
-      ["7+", "options de destination"],
+      ["9+", "options de destination"],
       ["4 étapes", "feuille de route"],
       ["Rapide", "prochaine étape"],
     ],
@@ -589,10 +605,22 @@ export const siteContent = {
         text: "Une destination proche avec des parcours francophones, une culture régionale familière et des universités en développement.",
       },
       {
-        name: "Émirats arabes unis",
-        flagCode: "uae",
-        bestFor: "Campus modernes",
-        text: "Campus modernes, réseaux business et programmes internationaux proches de la région.",
+        name: "France",
+        flagCode: "france",
+        bestFor: "Parcours francophones",
+        text: "Universités publiques solides, écoles de commerce et parcours en français avec une forte reconnaissance internationale.",
+      },
+      {
+        name: "Italie",
+        flagCode: "italy",
+        bestFor: "Design + médecine",
+        text: "Programmes européens en médecine, design, ingénierie, business et arts avec une vie étudiante riche.",
+      },
+      {
+        name: "Espagne",
+        flagCode: "spain",
+        bestFor: "Mobilité européenne",
+        text: "Options d'études accessibles en Europe, programmes internationaux, opportunités en espagnol et villes dynamiques.",
       },
       {
         name: "Autres destinations",
@@ -657,7 +685,9 @@ export const siteContent = {
       "Grèce",
       "Roumanie",
       "Maroc",
-      "Émirats arabes unis",
+      "France",
+      "Italie",
+      "Espagne",
     ],
     faq: [
       {

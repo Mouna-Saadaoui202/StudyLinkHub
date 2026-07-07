@@ -15,14 +15,11 @@ import img1 from '../../assets/img/about-1.jpg';
 import img2 from '../../assets/img/about-3.jpg';
 import img3 from '../../assets/img/about-4.jpg';
 import img4 from '../../assets/img/about-5.jpg';
-import img10 from '../../assets/img/dubai1.webp';
-import img11 from '../../assets/img/dubai2.webp';
 import img13 from '../../assets/img/russia1.webp';
 import img14 from '../../assets/img/russia2.webp';
 import img5 from '../../assets/img/China.jpg';
 import img6 from '../../assets/img/Germany.png';
 import img15 from '../../assets/img/Russia.jpg';
-import img12 from '../../assets/img/United Arab Emirates.png';
 import { BlogOne } from "../../components/blogs/BlogOne";
 
 const Germany = {
@@ -55,13 +52,33 @@ const Russia = {
   header: "Our destinations"
 };
 
-const Dubai = {
-  title: "Studying in the United Arab Emirates: A Gateway to Global Business and Modern Education",
-  description: "The United Arab Emirates is home to prestigious universities and international campuses offering cutting-edge programs in business, technology, and artificial intelligence. With a rapidly growing economy, students benefit from networking opportunities in finance, real estate, and entrepreneurship. The UAE’s strategic location, tax-free income policies, and strong focus on innovation make it an ideal destination for academic and professional growth. The country's post-graduation work visas further enhance career prospects in one of the world’s most dynamic job markets.",
-  
-  img1: img10,
-  img2: img11,
-  img3: img12,
+const France = {
+  title: "Studying in France: A Strong Pathway for European Education",
+  description: "France offers respected public universities, business schools, engineering programs, and French-language pathways with strong international recognition. Students can access a rich academic culture, diverse cities, and European mobility opportunities while preparing for future career growth.",
+
+  img1: img2,
+  img2: img3,
+  img3: img6,
+  header: "Our destinations"
+};
+
+const Italy = {
+  title: "Studying in Italy: European Programs in Design, Medicine, and Business",
+  description: "Italy combines quality European education with programs in medicine, design, engineering, business, and the arts. Its universities, cultural environment, and student-friendly cities make it a practical destination for international study plans.",
+
+  img1: img1,
+  img2: img4,
+  img3: img3,
+  header: "Our destinations"
+};
+
+const Spain = {
+  title: "Studying in Spain: Accessible Study Options and European Mobility",
+  description: "Spain provides accessible European study options, international programs, Spanish-language opportunities, and a vibrant student lifestyle. It is a strong choice for students who want academic flexibility and a clear European pathway.",
+
+  img1: img4,
+  img2: img2,
+  img3: img5,
   header: "Our destinations"
 };
 
@@ -73,7 +90,9 @@ export const HomeOne = () => {
 
       {/* about */}
       <AboutThree title={China.title} header={China.header} description={China.description} img1={China.img1} img3={China.img3} img2={China.img2}/>
-      <AboutThree title={Dubai.title} header={Dubai.header} description={Dubai.description} img1={Dubai.img1} img3={Dubai.img3} img2={Dubai.img2} />
+      <AboutThree title={France.title} header={France.header} description={France.description} img1={France.img1} img3={France.img3} img2={France.img2} />
+      <AboutThree title={Italy.title} header={Italy.header} description={Italy.description} img1={Italy.img1} img3={Italy.img3} img2={Italy.img2} />
+      <AboutThree title={Spain.title} header={Spain.header} description={Spain.description} img1={Spain.img1} img3={Spain.img3} img2={Spain.img2} />
       <AboutThree title={Russia.title} header={Russia.header} description={Russia.description} img1={Russia.img1} img3={Russia.img3} img2={Russia.img2} />
       <AboutThree title={Germany.title} header={Germany.header} description={Germany.description} img1={Germany.img1} img3={Germany.img3} img2={Germany.img2} />
 
