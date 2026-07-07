@@ -1,20 +1,20 @@
-import studentImage from "../assets/img/student.jpg";
-import docsImage from "../assets/img/docs.jpg";
-import scholarshipImage from "../assets/img/scholar1.jpg";
-import trustImage from "../assets/img/trust.jpg";
-import successImage from "../assets/img/success.jpg";
-import logoImage from "../assets/img/studylinkhub-logo.png";
-import emailIcon from "../assets/img/icons/envlop.svg";
-import phoneIcon from "../assets/img/icons/call.svg";
-import studentIcon from "../assets/img/icons/user.svg";
-import programIcon from "../assets/img/icons/computer.svg";
-import calendarIcon from "../assets/img/icons/calendar.svg";
-import worldIcon from "../assets/img/icons/world.svg";
-import searchIcon from "../assets/img/icons/search.svg";
-import bookIcon from "../assets/img/icons/book.svg";
-import heartIcon from "../assets/img/icons/love.svg";
-import contactShapeOne from "../assets/img/home_5/contact_shape_1.svg";
-import contactShapeTwo from "../assets/img/home_5/contact_shape_2.svg";
+import studentImage from "../../../assets/img/student.jpg";
+import docsImage from "../../../assets/img/docs.jpg";
+import scholarshipImage from "../../../assets/img/scholar1.jpg";
+import trustImage from "../../../assets/img/trust.jpg";
+import successImage from "../../../assets/img/success.jpg";
+import logoImage from "../../../assets/img/studylinkhub-logo.png";
+import emailIcon from "../../../assets/img/icons/envlop.svg";
+import phoneIcon from "../../../assets/img/icons/call.svg";
+import studentIcon from "../../../assets/img/icons/user.svg";
+import programIcon from "../../../assets/img/icons/computer.svg";
+import calendarIcon from "../../../assets/img/icons/calendar.svg";
+import worldIcon from "../../../assets/img/icons/world.svg";
+import searchIcon from "../../../assets/img/icons/search.svg";
+import bookIcon from "../../../assets/img/icons/book.svg";
+import heartIcon from "../../../assets/img/icons/love.svg";
+import contactShapeOne from "../../../assets/img/home_5/contact_shape_1.svg";
+import contactShapeTwo from "../../../assets/img/home_5/contact_shape_2.svg";
 
 export const languages = {
   en: {
@@ -370,6 +370,11 @@ export const siteContent = {
         value: "Immeuble Lys Bloc A, Rue de la Bourse, Lac 2, Tunis, Tunisia",
         href: "https://www.google.com/maps/search/Lac+2+Tunis+Tunisia",
       },
+      {
+        label: "Google Business Profile",
+        value: "Find Study Link Hub on Google",
+        href: "https://g.page/r/Cav2SZScZE4lEBM/review",
+      },
     ],
     newsletter: {
       email: "Email address",
@@ -711,6 +716,11 @@ export const siteContent = {
         label: "Adresse",
         value: "Immeuble Lys Bloc A, Rue de la Bourse, Lac 2, Tunis, Tunisie",
         href: "https://www.google.com/maps/search/Lac+2+Tunis+Tunisia",
+      },
+      {
+        label: "Profil Google Business",
+        value: "Voir Study Link Hub sur Google",
+        href: "https://g.page/r/Cav2SZScZE4lEBM/review",
       },
     ],
     newsletter: {

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { ArticlePage } from "./pages/ArticlePage";
-import { ArticlesPage } from "./pages/ArticlesPage";
-import { LandingPage } from "./pages/LandingPage";
+import { ArticlePage } from "./features/site/pages/ArticlePage";
+import { ArticlesPage } from "./features/site/pages/ArticlesPage";
+import { LandingPage } from "./features/site/pages/LandingPage";
 
 function App() {
   const { pathname } = useLocation();

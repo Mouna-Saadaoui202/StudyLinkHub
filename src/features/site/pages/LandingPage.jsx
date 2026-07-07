@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { articles, languages, siteContent, articleImages } from "../data/siteContent";
-import "../assets/css/landing.css";
+import "../styles/landing.css";
 
 const formspreeEndpoints = {
   contact: import.meta.env.VITE_FORMSPREE_CONTACT_ENDPOINT || "https://formspree.io/f/xwvdzvar",
@@ -33,10 +33,10 @@ function FormMessage({ message }) {
 }
 
 const socialLinks = [
-  { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/" },
-  { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/" },
-  { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/" },
-  { label: "TikTok", icon: "tiktok", href: "https://www.tiktok.com/" },
+  { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/company/studylink-hub/?viewAsMember=true" },
+  { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/studylinkhub1?igsh=MWNuMTlyaHFrNGdqZQ%3D%3D" },
+  { label: "Facebook", icon: "facebook", href: "https://www.facebook.com/profile.php?id=61576342005417" },
+  { label: "TikTok", icon: "tiktok", href: "https://www.tiktok.com/@studylinkhub7?_r=1&_t=ZS-97pR0mMtS5v" },
 ];
 
 const serviceIconKeys = ["student", "program", "calendar"];
@@ -45,6 +45,7 @@ const processIconKeys = ["student", "search", "book", "calendar"];
 function getContactIcon(label) {
   const normalizedLabel = label.toLowerCase();
 
+  if (normalizedLabel.includes("google")) return articleImages.icons.search;
   if (normalizedLabel.includes("email")) return articleImages.icons.email;
   if (normalizedLabel.includes("phone") || normalizedLabel.includes("télé")) return articleImages.icons.phone;
   return articleImages.icons.world;
@@ -53,6 +54,7 @@ function getContactIcon(label) {
 function getContactIconType(label) {
   const normalizedLabel = label.toLowerCase();
 
+  if (normalizedLabel.includes("google")) return "google";
   if (normalizedLabel.includes("email")) return "email";
   if (normalizedLabel.includes("phone") || normalizedLabel.includes("télé")) return "phone";
   return "address";
@@ -409,7 +411,12 @@ export function LandingPage({ lang = "en" }) {
   return (
     <div className="slh-page">
       <header className="slh-header">
-        <Link to={joinPath(lang)} className="slh-brand" aria-label="Study Link Hub">
+        <Link
+          to={joinPath(lang)}
+          className="slh-brand"
+          aria-label="Study Link Hub"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           <img src={articleImages.logo} alt="" />
         </Link>
 
@@ -426,11 +433,11 @@ export function LandingPage({ lang = "en" }) {
         </button>
 
         <nav className={`slh-nav ${isMenuOpen ? "is-open" : ""}`} aria-label="Main navigation">
-          <a href="#about" onClick={() => setIsMenuOpen(false)}>{content.nav.about}</a>
+          <a href="#top" onClick={() => setIsMenuOpen(false)}>{content.nav.home}</a>
           <a href="#scholarships" onClick={() => setIsMenuOpen(false)}>{content.nav.scholarships}</a>
           <a href="#destinations" onClick={() => setIsMenuOpen(false)}>{content.nav.destinations}</a>
           <a href="#process" onClick={() => setIsMenuOpen(false)}>{content.nav.process}</a>
-          <Link to={joinPath(lang, "/blogs")} onClick={() => setIsMenuOpen(false)}>{content.nav.articles}</Link>
+          <a href="#contact" onClick={() => setIsMenuOpen(false)}>{content.nav.contact}</a>
         </nav>
 
         <div className="slh-header-actions">
@@ -885,7 +892,13 @@ export function LandingPage({ lang = "en" }) {
           <a href="#top">{lang === "fr" ? "Vérifier mon projet" : "Check my study plan"}</a>
         </div>
         <div>
-          <img src={articleImages.logo} alt="Study Link Hub" />
+          <Link
+            to={joinPath(lang)}
+            aria-label="Study Link Hub home"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            <img src={articleImages.logo} alt="Study Link Hub" />
+          </Link>
           <p>{content.footer.text}</p>
         </div>
         <nav aria-label={lang === "fr" ? "Navigation du pied de page" : "Footer navigation"}>

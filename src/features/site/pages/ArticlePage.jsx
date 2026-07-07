@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { articleImages, articles, languages, siteContent } from "../data/siteContent";
-import "../assets/css/landing.css";
+import "../styles/landing.css";
 
 function joinPath(lang, path = "") {
   return `${languages[lang].pathPrefix}${path}` || "/";

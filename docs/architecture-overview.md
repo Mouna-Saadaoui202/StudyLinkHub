@@ -1,103 +1,98 @@
 # Project Architecture Overview
 
-## What  ThisProject Is
+## What This Project Is
 
-This is a Vite + React single-page application for Study Link Hub. "Single-page application" means the browser loads one main HTML file, then React changes the visible page when the visitor navigates.
+This is a Vite + React single-page application for Study Link Hub. The current website is a bilingual landing page with a separate blogs area.
 
-The site is currently structured as a static frontend with a separate Express email server folder.
+The recovered ZIP still contains many older template components and pages. Those files are kept as a reference, but the active website is now organized under `src/features/site/`.
 
 ## Main Tools
 
 - React 18: builds the visible user interface.
 - Vite 5: runs the local development server and creates the production `dist/` folder.
-- React Router DOM 6: controls page routes such as `/about`, `/blog`, and `/contact`.
-- Bootstrap, Slick, Swiper, WOW.js, jQuery UI: UI, sliders, animation, and theme behavior.
-- Express + Nodemailer in `server/`: receives contact form submissions and sends email through OVH SMTP.
+- React Router DOM 6: controls routes such as `/`, `/fr`, `/blogs`, and `/fr/blogs`.
+- Formspree: receives the contact and newsletter submissions.
 
-## Important Files And Folders
+## Active Files And Folders
 
-- `index.html`: the only HTML entry file. It contains the global page title, favicon, viewport tag, and preloader markup.
+- `index.html`: the HTML entry file.
 - `src/main.jsx`: starts React and wraps the app in `BrowserRouter`.
 - `src/App.jsx`: defines the active frontend routes.
-- `src/pages/`: top-level route pages.
-- `src/components/`: reusable sections such as headers, footers, hero sections, blog sections, and contact blocks.
-- `src/assets/`: images, videos, CSS, fonts, and local JavaScript files.
-- `public/`: files copied directly to production as-is.
-- `server/index.js`: Express email API.
-- `dist/`: generated production output from `npm run build`. This folder should be regenerated, not edited manually.
+- `src/features/site/pages/`: active landing page and blog pages.
+- `src/features/site/data/siteContent.js`: bilingual website text, contact details, blog content, and asset references.
+- `src/features/site/styles/landing.css`: active website styling.
+- `src/assets/img/`: images, logo, icons, and older template assets.
+- `docs/`: project recovery, deployment, maintenance, SEO, and risk notes.
+- `dist/`: generated production output from `npm run build`. Regenerate it; do not edit it manually.
+
+## Legacy Template Folders
+
+These folders are mostly from the original ZIP template and are not routed by the current app:
+
+- `src/components/`
+- `src/layouts/`
+- older folders inside `src/pages/`, such as `about`, `course`, `event`, `team`, and similar template pages
+- `src/assets/css/style.css`
+- `src/assets/js/`
+
+Keep them for now as backup/reference. They can be archived or removed later after the new landing/blog site is fully approved.
 
 ## Active Frontend Routes
 
-The currently active routes in `src/App.jsx` are:
+The current active routes in `src/App.jsx` are:
 
-- `/`
-- `/scholarship`
-- `/about`
-- `/faqs`
-- `/blog`
-- `/blog-details/:id`
-- `/contact`
-- `*` fallback error page
+- `/`: English landing page.
+- `/fr`: French landing page.
+- `/blogs`: English blogs page.
+- `/fr/blogs`: French blogs page.
+- `/blogs/:slug`: English blog detail page.
+- `/fr/blogs/:slug`: French blog detail page.
+- `/articles` and `/fr/articles`: redirects kept for compatibility.
+- `*`: redirects unknown paths to `/`.
 
-Several extra pages are imported or still present in the codebase but are not active routes. These look like original template/demo pages.
+## Form Integrations
 
-## API Integrations
+The website uses Formspree instead of the old manual email server.
 
-The contact page posts form data to:
-
-```txt
-https://www.study-link-hub.com/api/send-email
-```
-
-That endpoint is implemented in `server/index.js` as:
+Current frontend environment variables:
 
 ```txt
-POST /api/send-email
+VITE_FORMSPREE_CONTACT_ENDPOINT=https://formspree.io/f/xwvdzvar
+VITE_FORMSPREE_NEWSLETTER_ENDPOINT=https://formspree.io/f/mbdvbdqq
 ```
 
-The server uses OVH SMTP via Nodemailer.
-
-## Environment Variables
-
-No frontend `VITE_` environment variables were found.
-
-The backend should use environment variables for SMTP settings, but currently the credentials are written directly in `server/index.js`. This is a critical security and maintenance risk.
-
-Recommended backend variables:
-
-```txt
-SMTP_HOST=pro3.mail.ovh.net
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=contact@study-link-hub.com
-SMTP_PASS=replace-with-real-password
-CONTACT_TO=contact@study-link-hub.com
-PORT=3010
-```
+These are documented in `.env.example`.
 
 ## Deployment Model
 
-The frontend deployment output is the `dist/` folder created by:
+The frontend deployment output is created by:
 
 ```bash
 npm run build
 ```
 
-For OVH static hosting, upload the contents of `dist/` to the web root.
+For GitHub Pages, `vite.config.js` currently uses:
 
-Because the app uses `BrowserRouter`, OVH must be configured so direct URLs like `/about` and `/contact` return `index.html`. Without this rewrite, visitors may see a 404 when refreshing a subpage.
+```txt
+/StudyLinkHub/
+```
 
-The backend email server is separate. It must be hosted as a Node process or replaced with an OVH-compatible server-side email handler.
+For OVH static hosting on the real domain, confirm whether the site is hosted at the domain root. If yes, the Vite `base` may need to be `/` for OVH deployment.
+
+Because the app uses `BrowserRouter`, the host must return `index.html` for direct URLs such as `/blogs` and `/fr/blogs`. Without this fallback, visitors can see a 404 when refreshing a subpage.
 
 ## SEO Implementation Today
 
-Current SEO is minimal:
+Current SEO basics are in place:
 
-- One global `<title>` exists in `index.html`.
-- No route-specific title or meta description management was found.
-- No `robots.txt` was found.
-- No `sitemap.xml` was found.
-- No canonical URL tags were found.
-- No structured data JSON-LD was found.
-- Content is rendered by React in the browser, not pre-rendered at build time.
+- The landing page updates the document title and meta description by language.
+- Blog detail pages set page-specific titles and meta descriptions.
+- Blog routes exist for SEO-focused content.
 
+Still missing or recommended:
+
+- `robots.txt`
+- `sitemap.xml`
+- canonical tags
+- structured data JSON-LD for organization, local business, and blog posts
+- stronger pre-rendering strategy if organic search becomes a major traffic channel
